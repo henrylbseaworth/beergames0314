@@ -1,9 +1,9 @@
 beergames0214
 =============
 
-Week of June 2, 2014 beer games.
+Week of June 10, 2014 beer games.
 
-Due: Monday, June 9 as close to 4:35 pm MST as possible.
+Due: Wednesday, June 18 as close to Midnight MST as possible.
 
 Challenge
 -----
