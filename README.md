@@ -38,7 +38,7 @@ You can use any languages/libraries/hax so long as it works on the test machine 
 This is a special Beer Games because winners will get a beer purchased by the l33t team. If you're under 21 then you'll still get a beer, but you may not be able to drink it.
 
 ### Programs
-Contestants can enter any number of programs. Programs can use any language, libraries, or other programs on the test machine. The programs will be evaluated on ONE agreed upon machine. 
+Contestants can enter any number of programs. Programs can use any language, libraries, or other programs on the test machine. Talk to the l33t team to add dependencies to the test machine.
 
 ### Submissions
 Make a folder in the root directory of the repository. The name of this folder is your handle, you can choose anything except "dasboot" (that's where we'll keep all the tests and benchmarking stuff). Put all your submissions in your folder. In your folder you also need a file called "programlist" that conatins a list of all your programs. Here's an example programlist file:
@@ -47,7 +47,7 @@ Make a folder in the root directory of the repository. The name of this folder i
         ruby myothersubmission.rb    #for a script that doesn't have #!/usr/local/bin/ruby
         ./mycprogram.out    #a compiled program
 
-Each participant will be given access to the test server before they have to submit. Talk to the l33t team for details.
+Each participant will be given access to the test server before they have to submit and after the number of participants has been determied. Talk to the l33t team for details.
 
 For those not fammiliar with Git, if I wanted to submit my program called SortingIPAs.sh I could use the following procedure:
 
