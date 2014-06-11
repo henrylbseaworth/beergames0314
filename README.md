@@ -7,14 +7,16 @@ Due: Monday, June 9 as close to 4:35 pm MST as possible.
 
 Challenge
 -----
-Develop a program that takes two inputs, a "text file" and a "key" (the key and text file can be any ascii string). The program searches the text file for the key. If the key is found the program inserts the number of occurrences of the key up to that point in the document directly aftere each key and hte number is surrounded by parentheses (because the l33t team really likes them). The changes will be made in-place e.g. there is no "output" file, the changes are made to the original text.
+Develop a program that takes two inputs, a "text file" and a "key" (the key and text file can be any ascii string). The program searches the text file for the key. If the key is found the program inserts the number of occurrences of the key up to that point in the document directly after each key and the number is surrounded by parentheses (because the l33t team really likes them). The changes will be made in-place e.g. there is no "output" file, the changes are made to the original text. 
+
+A script (provided) will benchmark the performance of each program. The author of fasterst program wins. 
 
 Example
 -----
 We have a file "example-test.txt". The first part of this file looks like:
 	
 	    Non eram nescius, Brute, cum, quae summis ingeniis exquisitaque doctrina philosophi Graeco sermone tractavissent, ea Latinis litteris mandaremus, fore ut hic noster labor in varias reprehensiones incurreret. 
-
+a
 The example program, drunkensub, will operate like this: 
 
 	    ./drunkensub example-test.txt ae
