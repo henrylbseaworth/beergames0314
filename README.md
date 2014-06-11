@@ -1,7 +1,7 @@
-beergames0214
+beergames0314
 =============
 
-Week of June 10, 2014 beer games.
+Week of June 10, 2014 beer games (numero 3!).
 
 Due: Wednesday, June 18 as close to Midnight MST as possible.
 
