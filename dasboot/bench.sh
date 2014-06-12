@@ -19,13 +19,13 @@ if [[ ! -f programlist ]]; then
   exit 2
 fi
 
-while read PGRM; do
-  for TFILE in *.txt
-  do
+for TFILE in *.txt
+do
+  cp $TFILE $TFILE.tmp
+  while read PGRM; do
 	  NAME=${TFILE%.txt}
 	  EXE=${PGRM#*./}
-	  cp $TFILE $TFILE.tmp
 	  strace -c -o"BENCH_${NAME}_$EXE.trace" -Ttt $PGRM $TFILE.tmp $1
-	  rm $TFILE.tmp
-  done
-done <programlist
+  done <programlist
+  rm $TFILE.tmp
+done
