@@ -1,5 +1,14 @@
 #!/bin/bash
 
+#	This script runs every program in
+#	the file "programlist" using 
+#	every text file in the directory
+#	and a key provided with 
+#	command line arguments.
+#	There may be some issues with 
+#	escape characters and names.
+
+
 if [ $# -eq 0 ]
 then
   echo "Usage: $0 <key>"
