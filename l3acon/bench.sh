@@ -1,1 +1,1 @@
-dasboot/bench.sh
+../dasboot/bench.sh
