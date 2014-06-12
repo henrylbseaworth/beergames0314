@@ -16,7 +16,7 @@ while read p; do
 	  NAME=${fs%.txt}
 	  EXE=${1#*./}
 	  cp $fs $fs.tmp
-	  strace -c -o"BENCH_${NAME}_$EXE.d" -Ttt $1 $fs.tmp $2 
+	  strace -c -o"BENCH_${NAME}_$EXE.d" -Ttt $1 $fs.tmp $2
 	  rm $fs.tmp
   done
-done <programslist
+done <programlist
