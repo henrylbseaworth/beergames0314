@@ -32,7 +32,6 @@ while read PGRM; do
 	    cp $TFILE $TFILE.tmp
 	    #strace -c -o"BENCH_${NAME}_$EXE.trace" -Ttt $PGRM $TFILE.tmp $1
 	    ELAPSED=`strace -c -Ttt $PGRM $TFILE.tmp $1 2>&1 >/dev/null | tail -n1 | awk '{ print $2 }' RS='\t'`
-        echo ELAPSED: $ELAPSED
 	    rm $TFILE.tmp
         TOTAL=$(echo $TOTAL + $ELAPSED | bc)
       done
