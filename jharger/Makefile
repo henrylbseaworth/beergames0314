@@ -1,5 +1,5 @@
-CFLAGS=-O3 -march=native --std=c99
-LDFLAGS=-O3 -march=native
+CFLAGS=-O3 --std=c99
+LDFLAGS=-O3 
 EXES=hog
 
 .PHONY: clean
