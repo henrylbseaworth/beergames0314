@@ -21,20 +21,9 @@ fi
 
 PASSES=150
 
-function run_prog {
-	for i in $(seq 1 $PASSES)
-      do
-	    NAME=${TFILE%.txt}
-	    EXE=${PGRM#*./}
-	    cp $TFILE $TFILE.tmp
-	    $PGRM $TFILE.tmp $1 > /dev/null
-	    rm $TFILE.tmp
-      done
-}
-
 while read PGRM; do
   for TFILE in *.txt
   do
-    time run_prog $1
+    /usr/bin/time -f%e ./sub_bench.sh $PASSES $PGRM $TFILE $1
   done
 done <programlist
