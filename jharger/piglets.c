@@ -6,7 +6,41 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <pthread.h>
 #include "common.h"
+
+#define NUM_THREADS 4
+
+typedef struct {
+    char *buf;
+    const char *buf_end;
+    const char *key;
+    const char *key_end;
+    int keylen;
+} find_key_params_t;
+
+void *find_key(void* data)
+{
+    find_key_params_t *params = (find_key_params_t*)data;
+
+    const char *end = params->buf_end;
+    const char *kptr, *ptr2, *kend = params->key_end;
+    int keylen = params->keylen;
+    
+    for(char *ptr=params->buf;ptr < end; ptr ++) {
+        for(kptr = params->key, ptr2 = ptr;kptr < kend && ptr2 < end; kptr ++, ptr2++) {
+            if(*kptr != *ptr2) {
+                break;
+            }
+        }
+        if(kptr == kend) {
+            *ptr = '\0';
+            ptr += keylen - 1;
+        }
+    }
+
+    return NULL;
+}
 
 int main(int argc, char **argv)
 {
@@ -35,21 +69,39 @@ int main(int argc, char **argv)
 
     lseek(fd, 0, SEEK_SET);
 
-    const char *ptr = buf, *end = (buf + st.st_size) - keylen;
+    char *ptr;
+    const char *end = (buf + st.st_size) - keylen;
     const char *ptr2, *kptr, *kend = key + keylen;
     int count = 0;
     int out_offset = 0;
 
+    pthread_t threads[NUM_THREADS];
+    find_key_params_t params[NUM_THREADS];
+
+    int inc = st.st_size / NUM_THREADS;
+    for(int i = 0; i < NUM_THREADS; i ++) {
+        char *start = buf + (i * inc);
+        params[i].buf = start;
+        params[i].buf_end = i == (NUM_THREADS-1) ? end : start + inc;
+        params[i].key = key;
+        params[i].key_end = kend;
+        params[i].keylen = keylen;
+        if(i > 0) {
+            pthread_create(&threads[i], NULL, find_key, &params[i]);
+        }
+    }
+
+    find_key(&params[0]);
+
+    for(int i = 1; i < NUM_THREADS; i ++) {
+        pthread_join(threads[i], NULL);
+    }
+
     const size_t outbuf_size = st.st_blksize;
     char *outbuf = (char*)malloc(outbuf_size + 256);
-    for(;ptr < end; ptr ++) {
-        for(kptr = key, ptr2 = ptr;kptr < kend && ptr2 < end; kptr ++, ptr2++) {
-            if(*kptr != *ptr2) {
-                break;
-            }
-        }
 
-        if(kptr == kend) {
+    for(ptr = buf;ptr < end; ptr ++) {
+        if(*ptr == '\0') {
             count ++;
             for(kptr = key;kptr < kend; kptr ++)
             {
