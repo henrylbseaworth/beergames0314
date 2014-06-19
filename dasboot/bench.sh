@@ -25,7 +25,8 @@ do
   while read PGRM; do
 	  NAME=${TFILE%.txt}
 	  EXE=${PGRM#*./}
-	  strace -c -o"BENCH_${NAME}_$EXE.trace" -Ttt $PGRM $TFILE.tmp $1
+	  #strace -c -o"BENCH_${NAME}_$EXE.trace" -Ttt $PGRM $TFILE.tmp $1
+		(time $PGRM $TFILE.tmp $1) &> output_${NAME}_$EXE.log
   done <programlist
   rm $TFILE.tmp
 done

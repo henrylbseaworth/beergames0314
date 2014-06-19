@@ -12,43 +12,54 @@
 // for best breakfast compile with -O3
 //
 
+#define CHAR_COUNTERS 128
+
 using namespace std;
 
-static unsigned int eggs(unsigned int n)
+char* incs( char *s)
 {
-  return (n >= 1000000000u) ? 9 : (n >= 100000000u) ? 8 : 
-	(n >= 10000000u) ? 7 : (n >= 1000000u) ? 6 : 
-	(n >= 100000u) ? 5 : (n >= 10000u) ? 4 :
-	(n >= 1000u) ? 3 : (n >= 100u) ? 2 : (n >= 10u) ? 1u : 0u; 
+  int i, tail, len;
+  for(i = 0; s[i] != '\0'; ++i)
+	;
+  len = i;
+  for( tail = len  - 1; tail >= 0 && s[tail] == '9'; tail--)
+	;
+  if( tail < 0 )
+  {
+	//if( len + 2 > CHAR_COUNTERS )
+	//  s = realloc(s, (len + 2) << 1);
+	s[0] = '1';
+	for(i = 1; i <= len; ++i)
+	  s[i] = '0';
+	s[len + 1] = '\0';
+  }
+  else
+  {
+	for( i = len - 1; i > tail; --i)
+	  s[i] = '0';
+	s[tail] ++;
+  }
 }
+ 
 
-// include a backery to make faster
-inline void toast(vector<string> &cng, unsigned int to)
-{
-  while( cng.size() < to)
-	cng.push_back(to_string( cng.size() ));
-}
-
-void link_sausage(char* in, int size, vector<char> &out, char* key, const int keysize, vector<string> &count)
+void link_sausage(char* in, int size, vector<char> &out, char* key, const int keysize, char* str)
 {
   int curr = 0;
 
-  for(long i = 0; i < size - keysize; ++i)
+  for(unsigned long long i = 0; i < size - keysize; ++i)
   {
 	out.push_back(in[i]);
 	for(int j = 0; j < keysize + 1; ++j)
 	{
 	  if(j == keysize)
 	  {
-		if(count.size() < curr)
-		  toast(count, count.size() << 1);
 		curr ++;
 		for(int k = 1; k < keysize; ++k)
 		  out.push_back(in[i+k]);
 		i += keysize - 1;
 		out.push_back('(');
-		for(int k = 0; k < count[curr].size(); ++k)
-		  out.push_back(count[curr][k]);
+		for(unsigned short k = 0; str[k] != '\0'; ++k)
+		  out.push_back(str[k]);
 		out.push_back(')');
 	  }
 	  if(key[j] != in[j+i])
@@ -87,10 +98,10 @@ int main(int argc, char**argv)
   ifile.close();
   
   vector<char> duf;
-  vector<string> cnt;
-  toast(cnt, size >> 5);
+  char* str = (char*) malloc(CHAR_COUNTERS);
 
-  link_sausage(contents, size, duf, window, key.size(), cnt);
+  str[0] = '\0';
+  link_sausage(contents, size, duf, window, key.size(), str);
   
   ofstream ofile(argv[1]);
   ofile.write(duf.data(), duf.size());
