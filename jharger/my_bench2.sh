@@ -19,11 +19,13 @@ if [[ ! -f programlist ]]; then
   exit 2
 fi
 
-PASSES=150
+PASSES=25
 
 while read PGRM; do
   for TFILE in *.txt
   do
-    /usr/bin/time -f%e ./sub_bench.sh $PASSES $PGRM $TFILE $1
+    /usr/bin/time -f%e -o result.tmp ./sub_bench.sh $PASSES $PGRM $TFILE $1
+    TIME=`cat result.tmp`
+	echo TOTAL: $TIME AVERAGE: $(echo "$TIME / $PASSES * 1000000" | bc -l | sed s/[.].*//) us for $PGRM
   done
 done <programlist
